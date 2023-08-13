@@ -1,3 +1,4 @@
 /target
 service_account.json
 stats.csv
+.env
