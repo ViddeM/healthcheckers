@@ -13,10 +13,6 @@ pub enum ConfigError {
     EnvVarError(#[from] VarError),
     #[error("Empty variable error")]
     VarEmpty(String),
-    #[error("Invalid integer `{0}`")]
-    InvalidInteger(String),
-    #[error("Invalid boolean `{0}`")]
-    InvalidBoolean(String),
 }
 
 type ConfigResult<T> = Result<T, ConfigError>;
@@ -27,6 +23,7 @@ pub struct Config {
     pub send_from_email: String,
     pub service_account_file_path: String,
     pub send_to_email: String,
+    pub stats_file: String,
 }
 
 impl Config {
@@ -38,6 +35,7 @@ impl Config {
             send_from_email: load_env_str("SEND_FROM_EMAIL")?,
             service_account_file_path: load_env_str("SERVICE_ACCOUNT_FILE_PATH")?,
             send_to_email: load_env_str("SEND_TO_EMAIL")?,
+            stats_file: load_env_str("STATS_FILE")?,
         })
     }
 }
@@ -50,14 +48,4 @@ fn load_env_str(key: &str) -> ConfigResult<String> {
     }
 
     Ok(var)
-}
-
-fn load_env_num(key: &str) -> ConfigResult<u32> {
-    let var = load_env_str(key)?;
-    var.parse().map_err(|_| ConfigError::InvalidInteger(var))
-}
-
-fn load_env_bool(key: &str) -> ConfigResult<bool> {
-    let var = load_env_str(key)?;
-    var.parse().map_err(|_| ConfigError::InvalidBoolean(var))
 }
