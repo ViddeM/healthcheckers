@@ -1,0 +1,9 @@
+.table-container {
+    max-width: 1000px;
+}
+
+.dashboard-table {
+    background-color: white;
+    border-radius: 5px;
+    width: 1000px;
+}

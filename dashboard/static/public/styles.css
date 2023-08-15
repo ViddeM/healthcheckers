@@ -1,0 +1,79 @@
+.login-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 100px
+}
+
+html,
+body {
+    background-color: #e0c3ff;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+h1 {
+    margin: 0;
+}
+
+h3 {
+    margin: 10px 0;
+}
+
+p {
+    margin: 5px 0;
+}
+
+a {
+    color: green;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+input {
+    margin: 5px
+}
+
+header {
+    color: white;
+    background-color: #6722b1;
+    margin: 0 0 1rem 0;
+    padding: 1rem;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
+    -webkit-box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
+    -moz-box-shadow:0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2rem;
+    align-items: center;
+}
+
+.button {
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    padding: 5px;
+    min-width: 80px;
+    border: 1px solid gray;
+    margin-top: 1rem;
+    font-size: 14px;
+}
+
+.button:hover {
+    cursor: pointer;
+    background: #EFEFEF;
+    text-decoration: none;
+}
