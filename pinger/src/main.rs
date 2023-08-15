@@ -1,18 +1,14 @@
 use config::Config;
 use healthcheck::run_healthcheck;
+use healthcheck_common::stats_file::{log_entry, EmailResult, PingResult};
 use rand::{distributions::Alphanumeric, Rng};
 use rust_gmail::GmailClient;
-use stats_file::log_entry;
 
-use crate::{
-    email::email_err,
-    stats_file::{EmailResult, PingResult},
-};
+use crate::email::email_err;
 
 mod config;
 mod email;
 mod healthcheck;
-mod stats_file;
 
 fn main() {
     let config = Config::new().expect("Failed to load config!");
@@ -52,5 +48,11 @@ fn main() {
         }
     };
 
-    log_entry(&config, state, ping_url, ping_result, email_result)
+    log_entry(
+        config.stats_file,
+        state,
+        ping_url,
+        ping_result,
+        email_result,
+    )
 }

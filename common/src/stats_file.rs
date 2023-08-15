@@ -3,10 +3,9 @@ use std::{fs, io::Write, path::Path};
 use chrono::{DateTime, Utc};
 use serde::Serialize;
 
-use crate::config::Config;
-
+/// An entry for the statsfile.
 #[derive(Serialize, Debug, Clone)]
-struct StatsEntry {
+pub struct StatsEntry {
     entry_version: u32, // Which version of stats file this is, in case the format changes in the future.
     timestamp: DateTime<Utc>,
     pinged_url: String,
@@ -15,21 +14,30 @@ struct StatsEntry {
     email_result: EmailResult,
 }
 
+/// The result of a healthcheck ping.
 #[derive(Serialize, Debug, Clone)]
 pub enum PingResult {
+    /// A sucessful ping result.
     Success,
+    /// A failed ping result.
     Failure(String),
 }
 
+/// The result of emailing the healthcheck result.
 #[derive(Serialize, Debug, Clone)]
 pub enum EmailResult {
+    /// The email was sent without issues.
     SentSuccessfully,
+    /// A try was made to send an email but it failed with the wrapped error.
     FailedToSend(String),
+    /// No email was sent.
     NotSent,
 }
 
+/// Log an entry to the stats file at the provided `stats_file_path`.
+/// Will create the file if it does not already exist.
 pub fn log_entry(
-    config: &Config,
+    stats_file_path: String,
     state: String,
     ping_url: String,
     ping_result: PingResult,
@@ -44,7 +52,7 @@ pub fn log_entry(
         email_result,
     };
 
-    let path = Path::new(&config.stats_file);
+    let path = Path::new(&stats_file_path);
     if path.exists() {
         if !path.is_file() {
             panic!("Provided stats file path {path:?} is not a file!");

@@ -16,3 +16,6 @@ rust-gmail = { version = "0.1", features = ["blocking"] }
 serde = { version = "1.0", features = ["serde_derive"] }
 csv = "1.2"
 chrono = { version = "0.4", features = ["serde"] } 
+
+[dependencies.healthcheck-common]
+path = "../common"

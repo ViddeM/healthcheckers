@@ -1,2 +1,2 @@
 [workspace]
-members = ["listener", "pinger"]
+members = ["listener", "pinger", "common"]
