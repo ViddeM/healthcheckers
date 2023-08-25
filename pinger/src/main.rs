@@ -2,24 +2,24 @@ use config::Config;
 use healthcheck::run_healthcheck;
 use healthcheck_common::stats_file::{log_entry, EmailResult, PingResult};
 use rand::{distributions::Alphanumeric, Rng};
-use rust_gmail::GmailClient;
 
-use crate::email::email_err;
+#[cfg(feature = "gmail")]
+use gmail::GmailHandler;
 
 mod config;
-mod email;
+mod email_service;
 mod healthcheck;
+
+#[cfg(feature = "gmail")]
+mod gmail;
+
+#[cfg(not(feature = "gmail"))]
+compile_error!("exactly one email feature must be enabled (try enabling feature \"gmail\")");
 
 fn main() {
     let config = Config::new().expect("Failed to load config!");
-    let email_client = GmailClient::builder(
-        config.service_account_file_path.clone(),
-        config.send_from_email.clone(),
-    )
-    .expect("Failed to create gmail client")
-    .mock_mode()
-    .build_blocking()
-    .expect("Failed to build gmail client");
+
+    let emailer = GmailHandler::new(&config).expect("Failed to create gmail client");
 
     let state: String = rand::thread_rng()
         .sample_iter(&Alphanumeric)
@@ -38,11 +38,10 @@ fn main() {
             eprintln!("Healthcheck failed, err {ping_error}");
 
             let ping_result = PingResult::Failure(ping_error.clone());
-            let email_result =
-                match email_err(email_client, ping_error, config.send_to_email.clone()) {
-                    Ok(()) => EmailResult::SentSuccessfully,
-                    Err(e) => EmailResult::FailedToSend(e),
-                };
+            let email_result = match email_service::email_err(ping_error, &config, &emailer) {
+                Ok(()) => EmailResult::SentSuccessfully,
+                Err(e) => EmailResult::FailedToSend(e),
+            };
 
             (ping_result, email_result)
         }

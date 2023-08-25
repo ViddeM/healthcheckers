@@ -21,9 +21,9 @@ type ConfigResult<T> = Result<T, ConfigError>;
 pub struct Config {
     pub check_base_url: String,
     pub send_from_email: String,
-    pub service_account_file_path: String,
     pub send_to_email: String,
     pub stats_file: String,
+    pub service_account_file_path: String,
 }
 
 impl Config {
