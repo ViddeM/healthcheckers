@@ -19,6 +19,7 @@ compile_error!("exactly one email feature must be enabled (try enabling feature 
 fn main() {
     let config = Config::new().expect("Failed to load config!");
 
+    #[cfg(feature = "gmail")]
     let emailer = GmailHandler::new(&config).expect("Failed to create gmail client");
 
     let state: String = rand::thread_rng()

@@ -23,6 +23,7 @@ pub struct Config {
     pub send_from_email: String,
     pub send_to_email: String,
     pub stats_file: String,
+    #[cfg(feature = "gmail")]
     pub service_account_file_path: String,
 }
 
@@ -33,9 +34,10 @@ impl Config {
         Ok(Config {
             check_base_url: load_env_str("CHECK_BASE_URL")?,
             send_from_email: load_env_str("SEND_FROM_EMAIL")?,
-            service_account_file_path: load_env_str("SERVICE_ACCOUNT_FILE_PATH")?,
             send_to_email: load_env_str("SEND_TO_EMAIL")?,
             stats_file: load_env_str("STATS_FILE")?,
+            #[cfg(feature = "gmail")]
+            service_account_file_path: load_env_str("SERVICE_ACCOUNT_FILE_PATH")?,
         })
     }
 }
