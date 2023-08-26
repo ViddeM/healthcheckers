@@ -23,7 +23,16 @@ pub struct Config {
     pub send_from_email: String,
     pub send_to_email: String,
     pub stats_file: String,
-    #[cfg(feature = "gmail")]
+    pub email_config: EmailConfig,
+}
+
+#[derive(Debug, Clone)]
+pub enum EmailConfig {
+    Gmail(GmailConfig),
+}
+
+#[derive(Debug, Clone)]
+pub struct GmailConfig {
     pub service_account_file_path: String,
 }
 
@@ -36,8 +45,9 @@ impl Config {
             send_from_email: load_env_str("SEND_FROM_EMAIL")?,
             send_to_email: load_env_str("SEND_TO_EMAIL")?,
             stats_file: load_env_str("STATS_FILE")?,
-            #[cfg(feature = "gmail")]
-            service_account_file_path: load_env_str("SERVICE_ACCOUNT_FILE_PATH")?,
+            email_config: EmailConfig::Gmail(GmailConfig {
+                service_account_file_path: load_env_str("SERVICE_ACCOUNT_FILE_PATH")?,
+            }),
         })
     }
 }
