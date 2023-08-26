@@ -6,4 +6,33 @@
     background-color: white;
     border-radius: 5px;
     width: 1000px;
+    border-collapse: collapse;
+}
+
+td {
+    border-bottom: 1px solid gray;
+    cursor: default;
+}
+
+tbody > tr:last-of-type > td {
+    border-bottom: none;
+}
+
+th {
+    border-bottom: 2px solid rgb(49, 49, 49);
+}
+
+.mouseoverable {
+    cursor: help;
+    color: #005050;
+    text-decoration: underline;
+}
+
+.color-ok {
+    color: #00A000;
+}
+
+.color-error {
+    color: #A00000;
+    font-weight: 600;
 }

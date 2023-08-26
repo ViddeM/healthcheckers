@@ -11,30 +11,54 @@
         </header>
         <main>
             <div class="table-container">
+                {{#if show_table}}
                 <table class="dashboard-table">
                     <thead>
                         <tr>
-                            <th>
+                            <th align="center">
                                 Version
                             </th>
-                            <th>
+                            <th align="center">
                                 Timestamp
                             </th>
-                            <th>
-                                Pinged URL
-                            </th>
-                            <th>
+                            <th align="center">
                                 Request State
                             </th>
-                            <th>
+                            <th align="center">
                                 Ping Result
                             </th>
-                            <th>
+                            <th align="center">
                                 Email Result
                             </th>
                         </tr>
                     </thead>
+                    <tbody>
+                        {{#each entries}}
+                        <tr>
+                            <td align="center">
+                                {{this.version}}
+                            </td>
+                            <td align="center">
+                                {{this.timestamp}}
+                            </td>
+                            <td  align="center" title="{{this.full_url}}" class="mouseoverable">
+                                {{this.request_state}}
+                            </td>
+                            <td align="center" title="{{this.ping_error}}" class="mouseoverable color-{{this.ping_color}}">
+                                {{this.ping_result}}
+                            </td>
+                            <td align="center" title="{{this.email_error}}" class="mouseoverable color-{{this.email_color}}">
+                                {{this.email_result}}
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
                 </table>
+                {{else}}
+                <div>
+                    No data found
+                </div>
+                {{/if}}
             </div>
         </main>
     </body>
