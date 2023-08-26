@@ -23,7 +23,6 @@ impl GmailHandler {
             send_from_email,
         )
         .or_else(|e| Err(format!("Failed to create gmail client, err: {e}")))?
-        .mock_mode()
         .build_blocking()
         .or_else(|e| Err(format!("Failed to build gmail client, err: {e}")))?;
 
